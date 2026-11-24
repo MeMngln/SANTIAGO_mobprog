@@ -4,6 +4,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import '../constants.dart';
 import '../widgets/custom_text.dart';
 import 'newsfeed_screen.dart';
+import 'notification_screen.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});
@@ -16,6 +17,9 @@ class _HomeScreenState extends State<HomeScreen> {
   int _selectedIndex = 0;
   final PageController _pageController = PageController();
 
+  // Enhancement 2: one AppBar title per tab.
+  static const List<String> _titles = [appName, 'Notifications', 'Profile'];
+
   @override
   void dispose() {
     _pageController.dispose();
@@ -24,14 +28,16 @@ class _HomeScreenState extends State<HomeScreen> {
 
   @override
   Widget build(BuildContext context) {
+    final isHomeTab = _selectedIndex == 0;
+
     return Scaffold(
       appBar: AppBar(
         shadowColor: fbTextColorWhite,
         elevation: 2,
         title: CustomText(
-          text: 'Facebook',
-          fontSize: ScreenUtil().setSp(25),
-          color: fbPrimary,
+          text: _titles[_selectedIndex], // Enhancement 2: dynamic title
+          fontSize: ScreenUtil().setSp(isHomeTab ? 25 : 22),
+          color: isHomeTab ? fbPrimary : Colors.black,
           fontFamily: 'Klavika',
           fontWeight: FontWeight.w700,
         ),
@@ -45,10 +51,11 @@ class _HomeScreenState extends State<HomeScreen> {
         },
         children: const <Widget>[
           NewsfeedScreen(),
-          // Placeholder so the Notifications tab has a page to jump to.
+          NotificationScreen(),
+          // Placeholder page for the Profile tab.
           Center(
             child: CustomText(
-              text: 'No notifications yet',
+              text: 'Profile',
               fontSize: 14,
               color: Colors.grey,
             ),
@@ -59,12 +66,14 @@ class _HomeScreenState extends State<HomeScreen> {
         showUnselectedLabels: false,
         showSelectedLabels: false,
         onTap: _onTappedBar,
+        // Enhancement 3: more BottomNavigationBarItems.
         items: const [
           BottomNavigationBarItem(icon: Icon(Icons.home), label: 'Home'),
           BottomNavigationBarItem(
             icon: Icon(Icons.notifications),
             label: 'Notifications',
           ),
+          BottomNavigationBarItem(icon: Icon(Icons.person), label: 'Profile'),
         ],
         selectedItemColor: fbPrimary,
         currentIndex: _selectedIndex,
