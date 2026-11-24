@@ -1,8 +1,10 @@
 import 'package:material_ui/material_ui.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
+import 'constants.dart';
 import 'screens/home_screen.dart';
 import 'screens/newsfeed_screen.dart';
+import 'screens/notification_screen.dart';
 
 void main() {
   runApp(const MainApp());
@@ -20,10 +22,14 @@ class MainApp extends StatelessWidget {
       builder: (_, child) {
         return MaterialApp(
           debugShowCheckedModeBanner: false,
-          title: "Facebook Replication",
+          title: appName, // Enhancement 4
+          theme: ThemeData(
+            colorScheme: ColorScheme.fromSeed(seedColor: fbPrimary),
+          ),
           initialRoute: "/home",
           routes: {
             "/newsfeed": (context) => const NewsfeedScreen(),
+            "/notification": (context) => const NotificationScreen(),
             "/home": (context) => const HomeScreen(),
           },
         );
