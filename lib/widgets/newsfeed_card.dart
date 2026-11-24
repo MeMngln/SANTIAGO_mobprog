@@ -14,7 +14,8 @@ class NewsfeedCard extends StatelessWidget {
   final String postContent;
   final String date;
   final int? numOfLikes;
-  final bool? hasImage;
+  final bool hasImage;
+  final bool hasPlaceholder;
 
   const NewsfeedCard({
     super.key,
@@ -22,7 +23,8 @@ class NewsfeedCard extends StatelessWidget {
     required this.postContent,
     required this.date,
     this.numOfLikes,
-    this.hasImage,
+    this.hasImage = false,
+    this.hasPlaceholder = false,
   });
 
   @override
@@ -84,10 +86,17 @@ class NewsfeedCard extends StatelessWidget {
               color: Colors.black,
             ),
             SizedBox(height: 5.h),
-            // Enhancement 1: image widget
-            if (hasImage == true)
+
+            if (hasImage)
               const PostImage(assetPath: 'assets/images/BerdengIlaw.jpeg'),
-            // Enhancement 3: widget-based Like / Comment / Share
+
+            if (hasPlaceholder)
+              SizedBox(
+                height: 250.h,
+                width: double.infinity,
+                child: const Placeholder(color: Colors.grey),
+              ),
+
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [

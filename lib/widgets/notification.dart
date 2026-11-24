@@ -1,0 +1,57 @@
+import 'package:material_ui/material_ui.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
+
+import 'custom_text.dart';
+import 'user_avatar.dart';
+
+/// One row in the notification list.
+class NotificationWidget extends StatelessWidget {
+  const NotificationWidget({
+    super.key,
+    required this.name,
+    required this.post,
+    required this.description,
+  });
+
+  final String name;
+  final String post;
+  final String description;
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      padding: EdgeInsets.all(ScreenUtil().setSp(15)),
+      child: Row(
+        children: [
+          UserAvatar(radius: 22.r),
+          SizedBox(width: ScreenUtil().setSp(10)),
+          Expanded(
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                CustomText(
+                  text: name,
+                  fontSize: ScreenUtil().setSp(20),
+                  color: Colors.black,
+                  fontWeight: FontWeight.w800,
+                ),
+                CustomText(
+                  text: 'Post: $post',
+                  fontSize: ScreenUtil().setSp(13),
+                  color: Colors.black,
+                ),
+                CustomText(
+                  text: description,
+                  fontSize: ScreenUtil().setSp(12),
+                  color: Colors.black,
+                  fontStyle: FontStyle.italic,
+                ),
+              ],
+            ),
+          ),
+          const Icon(Icons.more_horiz),
+        ],
+      ),
+    );
+  }
+}
